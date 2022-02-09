@@ -1,17 +1,7 @@
 <template>
-  <el-row>
-    <el-col :span="8" v-for="(o, index) in 2" :key="o" :offset="index > 0 ? 2 : 0">
-      <el-card :body-style="{ padding: '0px' }">
-        <img :src="imgUrl" class="image">
-        <div style="padding: 14px;">
-          <span>aaa</span>
-          <div class="bottom clearfix">
-            <time class="time">{{ currentDate }}</time>
-          </div>
-        </div>
-      </el-card>
-    </el-col>
-  </el-row>
+  <div class="demo-image__lazy">
+    <img v-for="url in imgUrl" fit="scale-down" :key="url" :src="url" />
+  </div>
 </template>
 
 <script>
@@ -19,8 +9,7 @@ export default {
   name: "MainImage",
   data() {
     return {
-      currentDate: new Date(),
-      imgUrl:""
+      imgUrl:[]
     };
 
   },
@@ -28,14 +17,16 @@ export default {
     getImage(){
       let requireModule = require.context(
           "/pic",
-          false
+          false,
+          /\w(\.gif|\.jpeg|\.png|\.jpg|\.bmp)/i
       );
       let imagesNameArr = [];
       for (let i = 0; i < requireModule.keys().length; i++) {
         imagesNameArr.push(requireModule.keys()[i].substr(2, requireModule.keys()[i].length));
       }
+
       imagesNameArr.forEach(imgUrl=>{
-        this.imgUrl=require("/pic/"+imgUrl)
+        this.imgUrl.push(require("/pic/"+imgUrl))
       })
 
     }
@@ -47,28 +38,17 @@ export default {
 </script>
 
 <style scoped>
-.time {
-  font-size: 13px;
-  color: #999;
+.demo-image__lazy {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  overflow: hidden;
+  float: left;
 }
-
-.bottom {
-  margin-top: 13px;
-  line-height: 12px;
-}
-
-.image {
-  width: 10%;
-  display: block;
-}
-
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-
-.clearfix:after {
-  clear: both
+img {
+  height: 300px;
+  width: auto;
+  overflow: hidden;
+  margin-right: 10px;
 }
 </style>
