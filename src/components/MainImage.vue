@@ -1,6 +1,13 @@
 <template>
   <div class="demo-image__lazy">
-    <img v-for="url in imgUrl" fit="scale-down" :key="url" :src="url" />
+    <el-image
+        v-for="(url) in imgUrl"
+        fit="scale-down"
+        :key="url"
+        :src="url"
+          :preview-src-list="imgUrl"
+        lazy
+    ></el-image>
   </div>
 </template>
 
@@ -45,8 +52,8 @@ export default {
   overflow: hidden;
   float: left;
 }
-img {
-  height: 300px;
+.el-image {
+  height: 400px;
   width: auto;
   overflow: hidden;
   margin-right: 10px;
