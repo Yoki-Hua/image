@@ -89,7 +89,7 @@ export default {
         this.loading = false;
         this.closeDialog();
         this.$message({
-          message: '上传成功！你的url:' + res.data.content['download_url'],
+          message: '上传成功！你的url:' + res.data.content['download_url']+`,`+window.location.href+require("/pic/"+this.file.name),
           type: 'success',
           duration: 4000
         });
@@ -121,7 +121,9 @@ export default {
       this.image2Base64(this.file, back)
     },
     openDialog() {
+
       this.dialogVisible = true;
+console.log(window.location.href)
     },
     closeDialog() {
       this.dialogVisible = false;
