@@ -25,7 +25,7 @@ export default {
       let requireModule = require.context(
           "/pic",
           false,
-          /\w(\.gif|\.jpeg|\.png|\.jpg|\.bmp)/i
+          /\w(\.gif|\.jpeg|\.png|\.jpg|\.webp|\.bmp)/i
       );
       let imagesNameArr = [];
       for (let i = 0; i < requireModule.keys().length; i++) {
