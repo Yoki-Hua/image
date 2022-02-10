@@ -42,7 +42,8 @@ export default {
       dialogVisible: false,
       body: {},
       file: {},
-      loading: false
+      loading: false,
+      newTime:""
     };
   },
   methods: {
@@ -77,9 +78,7 @@ export default {
       }
       this.loading = true;
       let token = cryptoAES.decrypt("+LSaqqzSAOxDFl5Pl6Sh3IhY5/4rFkQI13JQgfnGQd1OdEAWygfSdKLtIlgci3JN")
-      let nowTime = new Date().getTime();
-      let newTime = moment(nowTime,).format("yyyyMMDDHHmmss");
-      this.$http.put("https://api.github.com/repos/Yoki-Hua/image/contents/pic/" + newTime + "_" + this.file.name,
+      this.$http.put("https://api.github.com/repos/Yoki-Hua/image/contents/pic/" + this.newTime + "_" + this.file.name,
        this.body
       ,{
         headers: {
@@ -111,9 +110,9 @@ export default {
         let base64Arr = res.split(",");
         let picBase64 = base64Arr[1];
         let nowTime = new Date().getTime();
-        let newTime = moment(nowTime).format("yyyyMMDDHHmmss");
+        this.newTime = moment(nowTime).format("yyyyMMDDHHmmss");
         this.body = {
-          "message": "上传时间:" + newTime,
+          "message": "上传时间:" + this.newTime,
           "content": picBase64
         }
 
@@ -123,7 +122,6 @@ export default {
     openDialog() {
 
       this.dialogVisible = true;
-console.log(window.location.href)
     },
     closeDialog() {
       this.dialogVisible = false;
